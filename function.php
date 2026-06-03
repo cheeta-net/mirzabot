@@ -1884,9 +1884,13 @@ function createPayPuzzlenetpay($amount, $chat_id)
     if ($apiKey == "0" || empty($baseUrl)) {
         return ['status' => false, 'msg' => 'gateway not configured'];
     }
+    $query = http_build_query([
+        'chat_id' => intval($chat_id),
+        'amount' => intval($amount),
+    ]);
     $curl = curl_init();
     curl_setopt_array($curl, array(
-        CURLOPT_URL => $baseUrl . '/api/payment/create',
+        CURLOPT_URL => $baseUrl . '/api/payment/create?' . $query,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -1894,12 +1898,7 @@ function createPayPuzzlenetpay($amount, $chat_id)
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode([
-            'chat_id' => intval($chat_id),
-            'amount' => intval($amount),
-        ]),
         CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json',
             'Accept: application/json',
             'api-key: ' . $apiKey,
         ),
