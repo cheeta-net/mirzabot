@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API درگاه پرداخت</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: #111827;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        code {
+            background: #0b1220;
+            padding: 10px;
+            display: block;
+            border-radius: 8px;
+            direction: ltr;
+            overflow-x: auto;
+        }
+
+        .endpoint {
+            color: #38bdf8;
+        }
+
+        .method {
+            color: #22c55e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        مستندات API درگاه پرداخت ربات
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>📌 معرفی</h2>
+            <p>
+                این API برای ایجاد و مدیریت پرداخت‌ها در ربات طراحی شده است.
+                با استفاده از این API می‌توانید پرداخت جدید ایجاد کرده و لینک پرداخت دریافت کنید.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>🔐 احراز هویت</h2>
+            <p>
+                برای استفاده از API باید API Key در هدر هر درخواست ارسال شود:
+            </p>
+
+            <code>
+api-key: your_api_key_here
+        </code>
+        </div>
+
+        <div class="card">
+            <h2>💳 ایجاد پرداخت</h2>
+            <p>
+                <span class="method">POST</span>
+                <span class="endpoint">/api/payment/create</span>
+            </p>
+
+            <h4>Request Body:</h4>
+            <code>
+{
+    "chat_id": 123456,
+    "amount": 50000,
+}
+        </code>
+
+            <h4>Response:</h4>
+            <code>
+{
+    "status": true,
+    "msg": "Success",
+    "data": {
+        "payment_id": "9f3a5-ab56-d567a42a8a5b",
+        "payment_link": "https://your-domain.com/pay/9f3a5-ab56-d567a42a8a5b"
+    }
+}
+        </code>
+        </div>
+
+
+        <div class="card">
+            <h2>📥 بررسی وضعیت پرداخت</h2>
+            <p>
+                <span class="method">GET</span>
+                <span class="endpoint">/api/payment/{payment_id}</span>
+            </p>
+
+            <h4>Response:</h4>
+            <code>
+{
+    "status": true,
+    "msg": "Payment status is confirmed",
+    "data": {
+        "paid": true
+    }
+}
+        </code>
+        </div>
+
+        <div class="card">
+            <h2>🔔 Callback System</h2>
+            <p>
+                بعد از اینکه پرداخت توسط سیستم تأیید شود، یک درخواست POST به آدرس Callback شما ارسال می‌شود.
+            </p>
+
+            <h4>Callback URL (در تنظیمات فروشگاه)</h4>
+            <code>
+https://your-domain.com/callback
+        </code>
+
+            <h4>Payload مثال ارسال شده:</h4>
+            <code>
+{
+    "payment_id": "9f3a5-ab56-d567a42a8a5b",
+    "status": "confirmed",
+    "fee": 500,
+    "net_amount": 49500
+}
+        </code>
+        </div>
+
+        <div class="card">
+            <h2>⚙️ نکات مهم</h2>
+            <ul>
+                <li>API Key را محرمانه نگه دارید</li>
+                <li>تمام درخواست‌ها باید دارای API Key باشند</li>
+                <li>مبلغ پرداخت به تومان است</li>
+                <li>Callback فقط در صورت تایید پرداخت ارسال می‌شود</li>
+                <li>اگر callback URL تنظیم نشده باشد، هیچ درخواستی ارسال نمی‌شود</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
