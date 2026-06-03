@@ -8,8 +8,8 @@ fi
 function self_update_script() {
     local MASTER_PATH="/root/install.sh"
     local BIN_LINK="/usr/local/bin/mirza"
-    local URL="https://raw.githubusercontent.com/mahdiMGF2/mirza_pro/main/install.sh"
-    local TEMP_FILE="/tmp/mirza_pro_update.sh"
+    local URL="https://raw.githubusercontent.com/cheeta-net/mirzabot/main/install.sh"
+    local TEMP_FILE="/tmp/mirzabot_update.sh"
     echo -e "\e[33mChecking for updates...\033[0m"
     wget -q -O "$TEMP_FILE" "$URL"
     if [ -s "$TEMP_FILE" ]; then
@@ -418,7 +418,7 @@ function install_bot() {
         exit 1
     fi
     # CHANGED: Always download from main branch (No releases for Pro)
-    ZIP_URL="https://github.com/mahdiMGF2/mirza_pro/archive/refs/heads/main.zip"
+    ZIP_URL="https://github.com/cheeta-net/mirzabot/archive/refs/heads/main.zip"
     echo -e "\033[33mDownloading Mirza Pro from Main Branch...\033[0m"
     # Download and extract the repository
     TEMP_DIR="/tmp/mirzaprobot"
@@ -428,7 +428,7 @@ function install_bot() {
         exit 1
     }
     unzip "$TEMP_DIR/bot.zip" -d "$TEMP_DIR"
-    # Find the extracted directory dynamically (usually mirza_pro-main)
+    # Find the extracted directory dynamically (usually mirzabot-main)
     EXTRACTED_DIR=$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d)
     mv "$EXTRACTED_DIR"/* "$BOT_DIR" || {
         echo -e "\e[91mError: Failed to move extracted files.\033[0m"
@@ -1259,7 +1259,7 @@ function update_bot() {
         exit 1
     fi
     # Fetch latest version from GitHub (Always Main Branch for Pro)
-    ZIP_URL="https://github.com/mahdiMGF2/mirza_pro/archive/refs/heads/main.zip"
+    ZIP_URL="https://github.com/cheeta-net/mirzabot/archive/refs/heads/main.zip"
     # Create temporary directory
     TEMP_DIR="/tmp/mirzaprobot_update"
     mkdir -p "$TEMP_DIR"
@@ -1270,7 +1270,7 @@ function update_bot() {
         exit 1
     }
     unzip -q "$TEMP_DIR/bot.zip" -d "$TEMP_DIR"
-    # Find extracted directory (usually mirza_pro-main)
+    # Find extracted directory (usually mirzabot-main)
     EXTRACTED_DIR=$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d)
     # Backup config file
     CONFIG_PATH="$BOT_DIR/config.php"
@@ -2623,8 +2623,8 @@ function migrate_to_pro() {
 
     # Download Pro Source
     echo -e "\033[33mDownloading Mirza Pro Source...\033[0m"
-    ZIP_URL="https://github.com/mahdiMGF2/mirza_pro/archive/refs/heads/main.zip"
-    TEMP_DIR="/tmp/mirza_pro_mig"
+    ZIP_URL="https://github.com/cheeta-net/mirzabot/archive/refs/heads/main.zip"
+    TEMP_DIR="/tmp/mirzabot_mig"
     mkdir -p "$TEMP_DIR"
     wget -q -O "$TEMP_DIR/bot.zip" "$ZIP_URL"
     unzip -q "$TEMP_DIR/bot.zip" -d "$TEMP_DIR"
